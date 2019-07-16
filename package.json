@@ -1,0 +1,25 @@
+{
+  "name": "rest-api",
+  "version": "0.0.1",
+  "description": "rest api with Node.js, Express & MongoDB",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/belachkar/rest-api.git"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "Node.js",
+    "Express",
+    "MongoDB"
+  ],
+  "author": "Belachkar Ali",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
