@@ -5,13 +5,19 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const MDB = {
-  prtl: process.env.MDB_PROTOCOLE,
   username: process.env.MDB_USER,
   password: process.env.MDB_PASS,
-  host: process.env.MDB_HOST,
+  prtl: process.env.MDB_PROTOCOLE_OLD,
+  host: process.env.MDB_HOST_OLD,
+  options: {
+    // dbName: 'test',
+    ssl: true,
+    useNewUrlParser: true,
+    authSource: 'admin'
+  }
 };
 
-const urlMDB = MDB.prtl+'://'+MDB.username+':'+MDB.password+'@'+MDB.host;
+const urlMDB = MDB.prtl + '://' + MDB.username + ':' + MDB.password + '@' + MDB.host;
 
 const postsRoute = require('./routes/posts');
 
@@ -25,14 +31,22 @@ app.get('/', (req, res) => {
 });
 
 // DB Connection
-mongoose.connect(urlMDB, { useNewUrlParser: true, ssl: true }, (err) => {
-  if (!err) {
-    console.log('Connnected to DB!');
-  } else {
-    console.log(urlMDB);
-    console.log(err);
-  }
+mongoose.connect(urlMDB, MDB.options);
+const mdb = mongoose.connection;
+
+mdb.on('error', (err) => console.error('ERROR on connecting to mongoDB:\n', err));
+mdb.once('open', () => {
+  console.log('Connnection to MongoDB SUCCESS');
 });
+// mongoose.connect(urlMDB, { useNewUrlParser: true, ssl: true }, (err) => {
+//   if (!err) {
+//     console.log('Connnected to DB!');
+//   } else {
+//     console.log(urlMDB);
+//     console.log(err);
+//   }
+// });
+
 
 // Listening
 app.listen(3000);
