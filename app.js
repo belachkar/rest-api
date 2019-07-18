@@ -3,7 +3,6 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
 require('dotenv').config();
 const postsRoute = require('./routes/posts');
 
@@ -22,9 +21,7 @@ const MDB = {
     keepAlive: true
   }
 };
-
 const urlMDB = MDB.prtl + '://' + MDB.username + ':' + MDB.password + '@' + MDB.host;
-
 
 // Middlewares
 app.use(cors());
